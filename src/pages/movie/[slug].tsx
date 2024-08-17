@@ -1,7 +1,7 @@
 import Image from "next/image";
 import Logo from "/public/popcorn-logo.svg";
 import { GetServerSidePropsContext } from "next";
-import { movieAPI } from "@/services/movieAPI";
+import { movieAPI } from "@/services/api";
 
 interface MoviePage {
   movie: {
@@ -39,7 +39,7 @@ interface MoviePage {
 export default function MoviePage({ movie, slug }: MoviePage) {
   return (
     <main className="bg-gradient-to-r from-red-800 to-red-600 flex flex-col p-[70px]">
-      <a href="/" className="flex items-center gap-4 drop-shadow-lg">
+      <a href="/home" className="flex items-center gap-4 drop-shadow-lg">
         <Image src={Logo} width={60} height={60} alt="logo" />
         <h1 className="uppercase text-[31px] text-white font-bold">
           GetMovies
