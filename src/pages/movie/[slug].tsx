@@ -148,10 +148,10 @@ export default function MoviePage({ movie, slug }: MoviePage) {
 
 export const getServerSideProps = async (ctx: GetServerSidePropsContext) => {
   const { slug } = ctx.params as { slug: string };
-  const API_KEY = process.env.API_KEY;
+  const OMDB_API_KEY = process.env.OMDB_API_KEY;
 
   try {
-    const res = await movieAPI.get(`?t=${slug}&apikey=${API_KEY}`);
+    const res = await movieAPI.get(`?t=${slug}&apikey=${OMDB_API_KEY}`);
 
     const {
       Title,

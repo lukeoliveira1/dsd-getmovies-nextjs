@@ -30,6 +30,7 @@ export default function Login() {
       const fetchData = async () => {
         try {
           let response;
+
           if (provider === "github") {
             response = await baseAPI.post("/auth/dj-rest-auth/github/", {
               code: code,
@@ -40,10 +41,10 @@ export default function Login() {
             });
           }
           if (response?.status === 200 && response.data) {
-            const access_token = response.data;
-            localStorage.setItem("access_token", access_token.token);
+            const access_token = response.data.key;
+            document.cookie = `access_token=${access_token}; path=/; secure; samesite=strict`;
+            router.push("/home");
           }
-          router.push("/home");
         } catch (error) {
           console.error("Erro ao fazer a requisição:", error);
         }
