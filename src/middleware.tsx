@@ -1,19 +1,11 @@
-import { NextRequest, NextResponse } from "next/server";
+import { NextResponse } from "next/server";
+import type { NextRequest } from "next/server";
 
-export async function middleware(req: NextRequest) {
-  const { pathname } = req.nextUrl;
-
-  if (pathname === "/home" || pathname.startsWith("/movie/")) {
-    const token = req.cookies.get("access_token");
-
-    if (!token) {
-      const url = req.nextUrl.clone();
-      url.pathname = "/";
-      return NextResponse.redirect(url);
-    }
+export function middleware(request: NextRequest) {
+  const isUserLoggedIn = request.cookies.get("accessToken");
+  if (!isUserLoggedIn) {
+    return NextResponse.redirect(new URL("/", request.url));
   }
-
-  return NextResponse.next();
 }
 
 export const config = {

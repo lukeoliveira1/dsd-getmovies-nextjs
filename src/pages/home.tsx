@@ -1,24 +1,53 @@
 import { useState } from "react";
 import Logo from "/public/popcorn-logo.svg";
 import Image from "next/image";
-import { useRouter } from "next/router";
-import { Logout } from "@mui/icons-material";
+import Router, { useRouter } from "next/router";
+import { Person, Logout } from "@mui/icons-material";
+import Cookies from "universal-cookie";
+import { useUserContext } from "@/context/userContext";
 
 export default function Home() {
   const router = useRouter();
   const [searchContent, setSearchContent] = useState("");
+  const { user, setUser } = useUserContext();
 
   function handleSearch() {
     router.push(`movie/${searchContent}`);
   }
 
   const handleLogout = () => {
-    document.cookie = `access_token=; path=/; expires=Thu, 01 Jan 1970 00:00:00 GMT`;
-    router.push("/");
+    const cookies = new Cookies();
+    cookies.remove("accessToken");
+    setUser({
+      email: "",
+      first_name: "",
+      last_name: "",
+      pk: 0,
+      username: "",
+    });
+    Router.push("/");
   };
 
   return (
     <main className="bg-gradient-to-r from-red-800 to-red-600 h-screen flex flex-col items-center justify-center">
+      <div className="w-full flex justify-end mr-72">
+        <div className="w-1/4 flex items-center p-4 bg-white shadow-lg rounded-lg">
+          <Person
+            sx={{ fontSize: 40, lineHeight: 40 }}
+            className="text-blue-600 mr-4"
+          />
+          <div className="flex flex-col">
+            <p className="text-2xl font-bold text-gray-800 mb-1">
+              {user.username}
+            </p>
+            <p className="text-lg text-gray-600">{user.first_name}</p>
+            {user.last_name && (
+              <p className="text-lg text-gray-600">{user.last_name}</p>
+            )}
+            <p className="text-lg text-gray-600">{user.email}</p>
+          </div>
+        </div>
+      </div>
       <div className="w-full flex justify-end mr-72">
         <button
           onClick={handleLogout}
