@@ -1,10 +1,11 @@
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import Logo from "/public/popcorn-logo.svg";
 import Image from "next/image";
 import Router, { useRouter } from "next/router";
 import { Person, Logout } from "@mui/icons-material";
 import Cookies from "universal-cookie";
 import { useUserContext } from "@/context/userContext";
+import AuthService from "@/services/auth";
 
 export default function Home() {
   const router = useRouter();
@@ -27,6 +28,28 @@ export default function Home() {
     });
     Router.push("/");
   };
+
+  useEffect(() => {
+    const fetchUserData = async () => {
+      try {
+        const cookies = new Cookies();
+        const token = cookies.get("accessToken");
+        const authService = new AuthService();
+
+        if (token) {
+          authService.getUser(token).then((response) => {
+            if (response) {
+              setUser(response);
+            }
+          });
+        }
+      } catch (error) {
+        console.error("Failed to fetch user data", error);
+      }
+    };
+
+    fetchUserData();
+  }, []);
 
   return (
     <main className="bg-gradient-to-r from-red-800 to-red-600 h-screen flex flex-col items-center justify-center">

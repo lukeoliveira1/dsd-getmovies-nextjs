@@ -14,7 +14,8 @@ export default class AuthService {
       const accessToken = response.data.key;
 
       const responseUser = await this.getUser(accessToken);
-      return responseUser;
+
+      return { accessToken, user: responseUser };
     } catch (error: any) {
       return error.response;
     }
@@ -31,7 +32,7 @@ export default class AuthService {
       const accessToken = response.data.key;
 
       const responseUser = await this.getUser(accessToken);
-      return responseUser;
+      return { accessToken, user: responseUser };
     } catch (error: any) {
       return error.response;
     }
@@ -44,10 +45,9 @@ export default class AuthService {
           Authorization: `Token ${accessToken}`,
         },
       });
-      return response;
+      return response.data;
     } catch (error: any) {
       return error.response;
     }
   }
-
 }

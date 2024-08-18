@@ -24,10 +24,10 @@ export default function Login() {
         authService
           .loginByGithub(router.query.code as string)
           .then((response) => {
-            if (response && response.status === 200) {
+            if (response && response.accessToken) {
               const cookies = new Cookies();
-              cookies.set("accessToken", response.data.key);
-              setUser(response.data);
+              cookies.set("accessToken", response.accessToken, { path: "/" });
+              setUser(response.user);
               router.push("/home");
             }
           });
@@ -35,10 +35,10 @@ export default function Login() {
         authService
           .loginByGoogle(router.query.code as string)
           .then((response) => {
-            if (response && response.status === 200) {
+            if (response && response.accessToken) {
               const cookies = new Cookies();
-              cookies.set("accessToken", response.data.key);
-              setUser(response.data);
+              cookies.set("accessToken", response.accessToken, { path: "/" });
+              setUser(response.user);
               router.push("/home");
             }
           });
