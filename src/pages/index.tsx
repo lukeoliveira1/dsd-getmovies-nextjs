@@ -4,7 +4,6 @@ import Image from "next/image";
 
 import { useRouter } from "next/router";
 import { useEffect } from "react";
-import { baseAPI } from "@/services/api";
 import { useUserContext } from "@/context/userContext";
 import AuthService from "@/services/auth";
 
@@ -17,30 +16,33 @@ export default function Login() {
   const { setUser } = useUserContext();
 
   useEffect(() => {
+    const state = router.query.state as string;
+
     if (router.query.code) {
       const authService = new AuthService();
-
-      authService
-        .loginByGithub(router.query.code as string)
-        .then((response) => {
-          if (response.status === 200) {
-            const cookies = new Cookies();
-            cookies.set("accessToken", response.data.key);
-            setUser(response.data);
-            router.push("/home");
-          }
-        });
-
-      // authService
-      //   .loginByGoogle(router.query.code as string)
-      //   .then((response) => {
-      //     if (response.status === 200) {
-      //       const cookies = new Cookies();
-      //       cookies.set("accessToken", response.data.key);
-      //       setUser(response.data);
-      //       router.push("/home");
-      //     }
-      //   });
+      if (state === "github") {
+        authService
+          .loginByGithub(router.query.code as string)
+          .then((response) => {
+            if (response && response.status === 200) {
+              const cookies = new Cookies();
+              cookies.set("accessToken", response.data.key);
+              setUser(response.data);
+              router.push("/home");
+            }
+          });
+      } else {
+        authService
+          .loginByGoogle(router.query.code as string)
+          .then((response) => {
+            if (response && response.status === 200) {
+              const cookies = new Cookies();
+              cookies.set("accessToken", response.data.key);
+              setUser(response.data);
+              router.push("/home");
+            }
+          });
+      }
     }
   }, [router.query]);
 
