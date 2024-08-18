@@ -1,6 +1,10 @@
 # Next.js GetMovies
 
-This is a Next.js project that utilizes the OMDB API to search for and list movies by name. The application provides a user-friendly interface for searching movies and displaying details such as title, year, poster, and additional details.
+This is a Next.js project that utilizes the OMDB API to search for and list movies by name. <br/>
+The application provides a user-friendly interface for searching movies and displaying details such as title, year, poster, and additional details. <br/>
+Integrated with the "oauth-backend" repository, it will provide a complete solution for authentication and authorization.
+
+
 
 ## Technologies Used
 
