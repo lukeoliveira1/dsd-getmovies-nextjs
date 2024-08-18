@@ -1,4 +1,4 @@
-import { Email, GitHub } from "@mui/icons-material";
+import { Google, GitHub } from "@mui/icons-material";
 import Logo from "/public/popcorn-logo.svg";
 import Image from "next/image";
 
@@ -63,21 +63,23 @@ export default function Login() {
         Login GetMovies
       </h1>
 
-      <button
-        onClick={handleGithubLogin}
-        className="w-36 h-12 bg-gray-50 mt-4 rounded-xl"
-      >
-        <GitHub sx={{ fontSize: 20, lineHeight: 20 }} />
-        Github
-      </button>
+      <div className="flex w-80 justify-around">
+        <button
+          onClick={handleGithubLogin}
+          className="w-36 h-12 bg-gray-50 mt-4 rounded-xl flex justify-around items-center p-6"
+        >
+          <GitHub sx={{ fontSize: 20, lineHeight: 20 }} />
+          Github
+        </button>
 
-      <button
-        onClick={handleGoogleLogin}
-        className="w-36 h-12 bg-gray-50 mt-4 rounded-xl"
-      >
-        <Email sx={{ fontSize: 20, lineHeight: 20 }} />
-        Gmail
-      </button>
+        <button
+          onClick={handleGoogleLogin}
+          className="w-36 h-12 bg-gray-50 mt-4 rounded-xl flex justify-around items-center p-6"
+        >
+          <Google sx={{ fontSize: 20, lineHeight: 20 }} />
+          Google
+        </button>
+      </div>
     </main>
   );
 }
